@@ -1,0 +1,33 @@
+- hosts: iscsiclient
+  vars_prompt:
+   - name: ipaddress_target
+     private: false
+   - name: target_name
+     private: false
+   - name: login
+     private: false
+
+  tasks:
+   - package:
+       name: scsi-target-utils
+       state: present
+
+   - service:
+       name: "tgtd" 
+       state: started
+       enabled: yes
+
+   - open_iscsi:
+       portal: "{{ipaddress_target}}"
+       show_nodes: yes
+       discover: yes
+     register: x
+
+   - debug:
+       var: x
+
+   - open_iscsi:
+       portal: "{{ipaddress_target}}"
+       target: "{{target_name}}"
+       login: "{{login}}"
+       

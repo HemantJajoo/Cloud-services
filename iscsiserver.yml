@@ -1,0 +1,18 @@
+- hosts: iscsiserver
+  vars:
+   - target_name
+   - partition_name
+   
+  tasks:
+   - package:
+       name: scsi-target-utils
+       state: present
+   
+   - template:
+       src: /root/playbooks/targets.conf
+       dest: /etc/tgt/targets.conf
+
+   - service:
+       name: tgtd
+       state: started
+       enabled: yes

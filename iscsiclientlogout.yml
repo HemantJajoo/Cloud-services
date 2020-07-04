@@ -1,0 +1,15 @@
+- hosts: iscsiclient
+  vars_prompt:
+   - name: ipaddress_target
+     private: false
+   - name: target_name
+     private: false
+   - name: login
+     private: false
+
+  tasks:
+   - open_iscsi:
+       portal: "{{ipaddress_target}}"
+       target: "{{target_name}}"
+       login: "{{login}}"
+

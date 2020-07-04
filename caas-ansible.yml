@@ -1,0 +1,4 @@
+- hosts: localhost
+  tasks:
+   - command: "sudo docker run -dit -p   5555:4200 shellinabox:v1"
+

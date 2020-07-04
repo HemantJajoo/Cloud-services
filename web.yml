@@ -1,0 +1,35 @@
+- hosts: all
+  tasks:
+   - selinux: 
+        policy: targeted
+        state: permissive
+  
+   - package:
+        name: httpd
+        state: present
+  
+   - file:
+        path: "/var/www/mylw"
+        state: directory
+        owner: "apache"
+
+   - copy:
+        dest: "/etc/httpd/conf.d/vimal.conf"
+        src: "web.conf"
+        owner: "apache"
+
+   - copy: 
+        dest: "/var/www/mylw/index.html"
+        content: "This is my webpage from Ansible(part 2) "
+        owner: "apache"
+   
+   - service:
+        name: "httpd"
+        state: restarted
+        enabled: yes
+
+   - firewalld:
+        state: enabled
+        port: 1233/tcp
+        immediate: true
+        permanent: true
